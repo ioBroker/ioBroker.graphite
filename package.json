@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "dependencies": {
+    "lazy-socket": "0.0.4"
+  }
+}

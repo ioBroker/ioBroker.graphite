@@ -1,0 +1,31 @@
+{
+    "common": {
+        "name":                     "graphite",
+        "title":                    "Graphite",
+        "desc":                     "Send all states to graphite",
+        "version":                  "0.0.0",
+        "mode":                     "daemon",
+        "platform":                 "Javascript/Node.js",
+        "loglevel":                 "info",
+        "keywords":                 ["graphite", "logging", "charts", "history"],
+        "main":                     "graphite.js",
+        "authors": [
+            "hobbyquaker <hq@ccu.io>"
+        ],
+        "license":                  "MIT",
+        "readme":                   "https://github.com/ioBroker/ioBroker.graphite/blob/master/README.md"
+    },
+    "native": {
+        "host": "127.0.0.1",
+        "port": 2003,
+        "logNames": true,
+        "prefix": "ioBroker"
+    },
+    "objects": [
+
+
+    ],
+    "instanceObjects": [
+
+    ]
+}
