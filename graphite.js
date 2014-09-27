@@ -3,6 +3,7 @@ var objects;
 var graphite;
 var ready;
 var queue = [];
+var logtypes = ['number', 'boolean'];
 
 var adapter = require(__dirname + '/../../lib/adapter.js')({
 
@@ -21,14 +22,32 @@ var adapter = require(__dirname + '/../../lib/adapter.js')({
             adapter.log.info('connecting to graphite on ' + adapter.config.host + ':' + adapter.config.port);
             graphite = LazySocket.createConnection(adapter.config.port, adapter.config.host);
             ready = true;
-            setInterval(popQueue, 1000);
+            setInterval(popQueue, 2500);
+            adapter.subscribeForeignStates('*');
         });
     },
 
     stateChange: function (id, state) {
         if (ready) {
-            var name = (adapter.config.logNames && objects[id] && objects[id].common ? (objects[id].common.name || id) : id);
+            var type = typeof state.val;
+            if (logtypes.indexOf(type) === -1) return;
+            if (type === 'boolean') state.val = state.val ? 1 : 0;
+            var name;
+            switch (adapter.config.name) {
+                case 'channel': // TODO
+                case 'both': // TODO
+                case 'state':
+                    name = (objects[id] && objects[id].common ? (objects[id].common.name || id) : id);
+                    break;
+
+                case 'id':
+                default:
+                    name = id;
+
+            }
+
             if (adapter.config.prefix) name = adapter.config.prefix + '.' + name;
+
             var sendData = name + ' ' + state.val + ' ' + state.ts + '\n';
             queue.push(sendData);
         }
@@ -43,9 +62,9 @@ var adapter = require(__dirname + '/../../lib/adapter.js')({
 function popQueue() {
     if (queue.length > 0) {
         var sendData = queue.pop();
-        adapter.log.debug('-> ' + sendData);
+        adapter.log.info('-> ' + sendData);
         graphite.write(sendData, 'utf-8', function (err) {
-            adapter.log.error(err)
+            if (err) adapter.log.error(err);
         });
         popQueue();
     }

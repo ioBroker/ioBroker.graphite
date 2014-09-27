@@ -2,12 +2,16 @@
     "common": {
         "name":                     "graphite",
         "title":                    "Graphite",
-        "desc":                     "Send all states to graphite",
-        "version":                  "0.0.0",
+        "desc": {
+            "de": "Langzeitarchiv und Charts mit Graphite",
+            "en": "Manage huge amounts of log data and draw charts with Graphite",
+            "ru": "Manage huge amounts of log data and draw charts with Graphite"
+        },
+        "version":                  "0.1.0",
         "mode":                     "daemon",
         "platform":                 "Javascript/Node.js",
         "loglevel":                 "info",
-        "keywords":                 ["graphite", "logging", "charts", "history"],
+        "keywords":                 ["graphite", "logging", "charts", "history", "langzeitarchiv", "graphen", "graphs"],
         "main":                     "graphite.js",
         "authors": [
             "hobbyquaker <hq@ccu.io>"
@@ -18,8 +22,8 @@
     "native": {
         "host": "127.0.0.1",
         "port": 2003,
-        "logNames": true,
-        "prefix": "ioBroker"
+        "name": "id",
+        "prefix": ""
     },
     "objects": [
 
