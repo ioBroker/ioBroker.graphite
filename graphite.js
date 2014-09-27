@@ -62,7 +62,7 @@ var adapter = require(__dirname + '/../../lib/adapter.js')({
 function popQueue() {
     if (queue.length > 0) {
         var sendData = queue.pop();
-        adapter.log.info('-> ' + sendData);
+        adapter.log.debug('-> ' + sendData);
         graphite.write(sendData, 'utf-8', function (err) {
             if (err) adapter.log.error(err);
         });
